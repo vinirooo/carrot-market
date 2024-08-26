@@ -1,15 +1,19 @@
 export default function Home() {
   return (
     <main className="bg-gray-100 h-screen flex items-center justify-center p-5">
-      <div className="bg-white shadow-md p-5 rounded-3xl w-full max-w-screen-sm flex flex-col gap-2">
-        <input
-          className="w-full rounded-full bg-gray-200 pl-5 py-3 outline-none ring ring-transparent focus:ring-orange-500 focus:ring-offset-2 transition-shadow placeholder:drop-shadow"
-          type="text"
-          placeholder="Search here..."
-        />
-        <button className="bg-black text-white py-2 rounded-full active:scale-95 transition-transform font-medium outline-none">
-          Search
-        </button>
+      <div className="bg-white shadow-md p-5 rounded-3xl w-full max-w-screen-sm flex flex-col md:flex-row gap-2">
+        {["Nico", "Aiden", "Yooou"].map((person, index) => (
+          <div
+            key={index}
+            className="flex items-center gap-5 border-b-1 p-5 last:border-0"
+          >
+            <div className="size-10 bg-blue-400 rounded-full" />
+            <span className="text-lg font-medium">{person}</span>
+            <div className="size-6 rounded-full bg-red-500 flex items-center justify-center text-white">
+              <span>{index}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </main>
   );
