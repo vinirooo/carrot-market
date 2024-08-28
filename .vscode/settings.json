@@ -1,0 +1,24 @@
+{
+  // 파워 모드 추가
+  "powermode.enabled": true,
+  "powermode.shake.intensity": 2,
+  "powermode.shake.enabled": true,
+  "powermode.combo.location": "off",
+
+  "powermode.explosions.customExplosions": [
+    "https://media.giphy.com/media/xUA7aXJY46jN2P6gGk/giphy.gif",
+    "https://media.giphy.com/media/l0IykOPjEJopboxWw/giphy.gif",
+    "https://media.giphy.com/media/3o7btLYqcZhUb2GP16/giphy.gif"
+  ],
+  "powermode.explosions.explosionOrder": "sequential",
+  "powermode.explosions.size": 6,
+  "powermode.explosions.frequency": 2,
+  "powermode.explosions.maxExplosions": 10,
+  "powermode.explosions.offset": 0.215,
+  "powermode.explosions.customCss": {
+    "mix-blend-mode": "color-dodge"
+  },
+  "powermode.explosions.gifMode": "restart",
+  "powermode.explosions.duration": 1000,
+  "powermode.explosions.backgroundMode": "mask"
+}
