@@ -1,13 +1,13 @@
 export default function Tailwind02() {
   return (
-    <main className="bg-gray-100 h-screen flex items-center justify-center p-5">
-      <div className="bg-white shadow-md p-5 rounded-3xl w-full max-w-screen-sm flex flex-col gap-2">
+    <main className="flex h-screen items-center justify-center bg-gray-100 p-5">
+      <div className="flex w-full max-w-screen-sm flex-col gap-2 rounded-3xl bg-white p-5 shadow-md">
         <input
-          className="w-full rounded-full bg-gray-200 pl-5 py-3 outline-none ring ring-transparent focus:ring-orange-500 focus:ring-offset-2 transition-shadow placeholder:drop-shadow"
+          className="w-full rounded-full bg-gray-200 py-3 pl-5 outline-none ring ring-transparent transition-shadow placeholder:drop-shadow focus:ring-orange-500 focus:ring-offset-2"
           type="text"
           placeholder="Search here..."
         />
-        <button className="bg-black text-white py-2 rounded-full active:scale-95 transition-transform font-medium outline-none">
+        <button className="rounded-full bg-black py-2 font-medium text-white outline-none transition-transform active:scale-95">
           Search
         </button>
       </div>

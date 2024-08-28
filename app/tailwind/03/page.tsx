@@ -57,15 +57,17 @@ const people = [
 
 export default function Example() {
   return (
-    <div className="p-4">
+    <div className="bg-white p-4">
       <ul className="divide-y divide-gray-100">
         {people.map((person, index) => (
           <li key={index} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
-              <img
+              <Image
                 className="h-12 w-12 flex-none rounded-full bg-gray-50"
                 src={person.imageUrl}
                 alt=""
+                width={48}
+                height={48}
               />
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">

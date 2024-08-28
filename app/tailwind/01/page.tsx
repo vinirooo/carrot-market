@@ -1,29 +1,29 @@
 export default function Tailwind01() {
   return (
-    <main className="bg-gray-100 h-screen flex items-center justify-center p-5 dark:bg-gray-700">
-      <div className="bg-white shadow-md p-5 rounded-3xl w-full max-w-screen-sm dark:bg-gray-500">
-        <div className="flex justify-between items-center">
+    <main className="flex h-screen items-center justify-center bg-gray-100 p-5 dark:bg-gray-700">
+      <div className="w-full max-w-screen-sm rounded-3xl bg-white p-5 shadow-md dark:bg-gray-500">
+        <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-gray-600 font-semibold -mb-1 dark:text-gray-400">
+            <span className="-mb-1 font-semibold text-gray-600 dark:text-gray-400">
               In transit
             </span>
             <span className="text-4xl font-semibold dark:text-white">
               Coolblue
             </span>
           </div>
-          <div className="size-12 bg-orange-400 rounded-full" />
+          <div className="size-12 rounded-full bg-orange-400" />
         </div>
         <div className="my-2 flex items-center gap-2">
-          <span className="px-2.5 py-1.5 bg-green-400 hover:bg-green-500 text-xs font-medium uppercase rounded-full text-white hover:scale-125 transition">
+          <span className="rounded-full bg-green-400 px-2.5 py-1.5 text-xs font-medium uppercase text-white transition hover:scale-125 hover:bg-green-500">
             Today
           </span>
           <span className="dark:text-white">9:30-10:30u</span>
         </div>
         <div className="relative">
-          <div className="bg-gray-200 w-full h-2 rounded-full absolute" />
-          <div className="bg-green-400 w-2/3 h-2 rounded-full absolute" />
+          <div className="absolute h-2 w-full rounded-full bg-gray-200" />
+          <div className="absolute h-2 w-2/3 rounded-full bg-green-400" />
         </div>
-        <div className="flex justify-between items-center mt-5 text-gray-600 dark:text-gray-200">
+        <div className="mt-5 flex items-center justify-between text-gray-600 dark:text-gray-200">
           <span>Expected</span>
           <span>Sorting center</span>
           <span>In transit</span>
