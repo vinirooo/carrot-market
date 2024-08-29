@@ -4,10 +4,10 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
-import { handleSubmit } from "./actions";
+import { login } from "./actions";
 
 export default function LoginPage() {
-  const [state, action] = useFormState(handleSubmit, null);
+  const [state, action] = useFormState(login, null);
   return (
     <div className="flex flex-col gap-10 px-6 py-8">
       <div className="flex flex-col gap-2 *:font-medium">
@@ -27,7 +27,7 @@ export default function LoginPage() {
           type="password"
           placeholder="Password"
           required
-          errors={state?.errors || []}
+          errors={state?.fieldErrors.password || []}
         />
         <Button text="Login" />
       </form>

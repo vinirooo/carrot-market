@@ -9,19 +9,12 @@ export default function SMSPage() {
         <p className="text-xl">Verify your phone number.</p>
       </div>
       <form className="flex flex-col gap-3">
+        <Input name="phone" type="number" placeholder="Phone number" required />
         <Input
-          name="phone"
-          type="number"
-          placeholder="Phone number"
-          required
-          errors={[]}
-        />
-        <Input
-          name="code"
+          name="token"
           type="number"
           placeholder="Verification code"
           required
-          errors={[]}
         />
         <Button text="Verify" />
       </form>

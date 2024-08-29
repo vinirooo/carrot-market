@@ -1,5 +1,10 @@
 "use server";
 
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "@/libs/constants";
 import { z } from "zod";
 
 const checkUsername = (username: string) => !username.includes("admin");
@@ -11,27 +16,17 @@ const checkConfirmPassword = ({
   confirmPassword: string;
 }) => password === confirmPassword;
 
-const passwordRegex = new RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[#?!@$%^&*-]).+$/,
-);
-
 const formSchema = z
   .object({
     username: z
       .string()
-      .min(3, "username은 3자보다 길어야 합니다.")
-      .max(20, "username은 20자보다 짧아야 합니다.")
       .trim()
       .refine(checkUsername, "username은 admin을 포함할 수 없습니다."),
     email: z.string().email().toLowerCase(),
     password: z
       .string()
-      .min(6, "비밀번호는 6자 이상이어야 합니다.")
-      .max(20, "비밀번호는 20자 이하여야 합니다.")
-      .regex(
-        passwordRegex,
-        "비밀번호는 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.",
-      ),
+      .min(PASSWORD_MIN_LENGTH, "비밀번호는 6자 이상이어야 합니다.")
+      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirmPassword: z.string(),
   })
   .refine(checkConfirmPassword, {
@@ -39,7 +34,7 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
-export async function createAccount(prevState: any, formData: FormData) {
+export async function createAccount(_: any, formData: FormData) {
   const data = {
     username: formData.get("username"),
     email: formData.get("email"),
