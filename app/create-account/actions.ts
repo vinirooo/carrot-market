@@ -2,7 +2,12 @@
 
 import { z } from "zod";
 
-const usernameSchema = z.string().min(3).max(20);
+const formSchema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  password: z.string().min(6).max(20),
+  confirmPassword: z.string().min(6).max(20),
+});
 
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
@@ -12,5 +17,8 @@ export async function createAccount(prevState: any, formData: FormData) {
     confirmPassword: formData.get("confirmPassword"),
   };
 
-  usernameSchema.parse(data.username);
+  const result = formSchema.safeParse(data);
+  if (!result.success) {
+    return result.error.flatten();
+  }
 }
