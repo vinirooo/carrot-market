@@ -1,4 +1,11 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
   // 파워 모드 추가
   "powermode.enabled": true,
   "powermode.shake.intensity": 2,
