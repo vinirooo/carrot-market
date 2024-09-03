@@ -5,9 +5,37 @@ import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_ERROR,
 } from "@/libs/constants";
+import db from "@/libs/db";
 import { z } from "zod";
 
 const checkUsername = (username: string) => !username.includes("admin");
+
+const checkUniqueUsername = async (username: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return !user;
+};
+
+const checkUniqueEmail = async (email: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return !user;
+};
+
 const checkConfirmPassword = ({
   password,
   confirmPassword,
@@ -21,8 +49,13 @@ const formSchema = z
     username: z
       .string()
       .trim()
-      .refine(checkUsername, "username은 admin을 포함할 수 없습니다."),
-    email: z.string().email().toLowerCase(),
+      .refine(checkUsername, "username은 admin을 포함할 수 없습니다.")
+      .refine(checkUniqueUsername, "이미 등록된 username이 있습니다."),
+    email: z
+      .string()
+      .email()
+      .toLowerCase()
+      .refine(checkUniqueEmail, "이미 등록된 이메일이 존재합니다."),
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH, "비밀번호는 6자 이상이어야 합니다.")
@@ -42,7 +75,7 @@ export async function createAccount(_: any, formData: FormData) {
     confirmPassword: formData.get("confirmPassword"),
   };
 
-  const result = formSchema.safeParse(data);
+  const result = await formSchema.safeParseAsync(data);
   if (!result.success) {
     return result.error.flatten();
   } else {
