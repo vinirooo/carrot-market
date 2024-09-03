@@ -7,6 +7,7 @@ import {
 } from "@/libs/constants";
 import db from "@/libs/db";
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
 const checkUsername = (username: string) => !username.includes("admin");
 
@@ -79,6 +80,19 @@ export async function createAccount(_: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
-    console.log(result.data);
+    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+
+    const user = await db.user.create({
+      data: {
+        username: result.data.username,
+        email: result.data.email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    console.log(user);
   }
 }
