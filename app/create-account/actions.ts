@@ -11,6 +11,7 @@ import bcrypt from "bcrypt";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import getSession from "@/libs/session";
 
 const checkUsername = (username: string) => !username.includes("admin");
 
@@ -60,10 +61,9 @@ const formSchema = z
       .email()
       .toLowerCase()
       .refine(checkUniqueEmail, "이미 등록된 이메일이 존재합니다."),
-    password: z
-      .string()
-      .min(PASSWORD_MIN_LENGTH, "비밀번호는 6자 이상이어야 합니다.")
-      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+    password: z.string(),
+    // .min(PASSWORD_MIN_LENGTH, "비밀번호는 6자 이상이어야 합니다.")
+    // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirmPassword: z.string(),
   })
   .refine(checkConfirmPassword, {
@@ -96,16 +96,10 @@ export async function createAccount(_: any, formData: FormData) {
       },
     });
 
-    console.log(user);
-
-    const cookie = await getIronSession(cookies(), {
-      cookieName: "delicious-karrot",
-      password: process.env.COOKIE_PASSWORD!,
-    });
-
-    //@ts-ignore
+    const cookie = await getSession();
     cookie.id = user.id;
     await cookie.save();
+
     redirect("/profile");
   }
 }

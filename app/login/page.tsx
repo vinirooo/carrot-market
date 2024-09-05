@@ -20,7 +20,7 @@ export default function LoginPage() {
           type="email"
           placeholder="Email"
           required
-          errors={[]}
+          errors={state?.fieldErrors.email || []}
         />
         <Input
           name="password"
