@@ -13,34 +13,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import getSession from "@/libs/session";
 
-const checkUsername = (username: string) => !username.includes("admin");
-
-const checkUniqueUsername = async (username: string) => {
-  const user = await db.user.findUnique({
-    where: {
-      username,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  return !user;
-};
-
-const checkUniqueEmail = async (email: string) => {
-  const user = await db.user.findUnique({
-    where: {
-      email,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  return !user;
-};
-
 const checkConfirmPassword = ({
   password,
   confirmPassword,
@@ -51,20 +23,50 @@ const checkConfirmPassword = ({
 
 const formSchema = z
   .object({
-    username: z
-      .string()
-      .trim()
-      .refine(checkUsername, "username은 admin을 포함할 수 없습니다.")
-      .refine(checkUniqueUsername, "이미 등록된 username이 있습니다."),
-    email: z
-      .string()
-      .email()
-      .toLowerCase()
-      .refine(checkUniqueEmail, "이미 등록된 이메일이 존재합니다."),
+    username: z.string().trim(),
+    email: z.string().email().toLowerCase(),
     password: z.string(),
     // .min(PASSWORD_MIN_LENGTH, "비밀번호는 6자 이상이어야 합니다.")
     // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirmPassword: z.string(),
+  })
+  .superRefine(async ({ username }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: "this username is already taken",
+        path: ["username"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  })
+  .superRefine(async ({ email }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: "this email is already taken",
+        path: ["email"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
   })
   .refine(checkConfirmPassword, {
     message: "password와 confirmPassword가 일치하지 않습니다.",
