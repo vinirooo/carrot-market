@@ -63,7 +63,7 @@ export async function login(_: any, formData: FormData) {
     if (correct) {
       const session = await getSession();
       session.id = user!.id;
-      session.save();
+      await session.save();
 
       redirect("/profile");
     } else {
