@@ -6,9 +6,10 @@ import {
   PASSWORD_REGEX_ERROR,
 } from "@/libs/constants";
 import db from "@/libs/db";
+import getSession from "@/libs/session";
+
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import getSession from "@/libs/session";
 import { redirect } from "next/navigation";
 
 const checkExistEmail = async (email: string) => {

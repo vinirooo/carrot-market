@@ -6,12 +6,11 @@ import {
   PASSWORD_REGEX_ERROR,
 } from "@/libs/constants";
 import db from "@/libs/db";
+import getSession from "@/libs/session";
+
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import getSession from "@/libs/session";
 
 const checkConfirmPassword = ({
   password,
